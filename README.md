@@ -4,6 +4,15 @@ Centralized disposable resource helpers for Dart: a bag for sync/async cleanup,
 subscription and timer-handle managers, and the `TimerDisposable` contract.
 Dependency-free beyond the Dart SDK.
 
+## Why use this package?
+
+- Dispose subscriptions, stream controllers, timer handles, and custom cleanup
+  callbacks through one owner.
+- Make repeated cleanup idempotent and immediately clean up resources
+  registered after disposal.
+- Share lifecycle helpers across Dart and Flutter code without Flutter runtime
+  dependencies.
+
 License: [Apache-2.0](LICENSE). Issues:
 [github.com/redjadet/ilkersevim_disposables/issues](https://github.com/redjadet/ilkersevim_disposables/issues).
 
@@ -11,7 +20,7 @@ License: [Apache-2.0](LICENSE). Issues:
 
 ```yaml
 dependencies:
-  ilkersevim_disposables: ^0.1.0
+  ilkersevim_disposables: ^0.1.2
 ```
 
 Requires Dart `>=3.12.0`.
