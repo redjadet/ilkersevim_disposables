@@ -1,0 +1,19 @@
+name: ilkersevim_disposables
+description: >-
+  DisposableBag, subscription/timer handle managers, and the TimerDisposable
+  contract for Dart resource lifecycle cleanup.
+version: 0.1.0
+repository: https://github.com/redjadet/ilkersevim_disposables
+homepage: https://github.com/redjadet/ilkersevim_disposables
+issue_tracker: https://github.com/redjadet/ilkersevim_disposables/issues
+topics:
+  - async
+  - lifecycle
+  - dart
+
+environment:
+  sdk: '>=3.12.0 <4.0.0'
+
+dev_dependencies:
+  lints: ^6.1.0
+  test: ^1.31.0

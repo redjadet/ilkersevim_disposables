@@ -1,0 +1,3 @@
+mixin TimerDisposable {
+  void dispose();
+}

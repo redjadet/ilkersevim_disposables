@@ -1,0 +1,9 @@
+name: ilkersevim_disposables_example
+publish_to: none
+
+environment:
+  sdk: '>=3.12.0 <4.0.0'
+
+dependencies:
+  ilkersevim_disposables:
+    path: ../
