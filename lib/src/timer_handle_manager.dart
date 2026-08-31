@@ -16,7 +16,7 @@ class TimerHandleManager {
 
   bool get isDisposed => _disposables.isDisposed;
 
-  TimerDisposable? register(final TimerDisposable? handle) {
+  TimerDisposable? register(TimerDisposable? handle) {
     if (handle == null) return null;
 
     if (_disposables.isDisposed) {
@@ -27,7 +27,7 @@ class TimerHandleManager {
     return _disposables.trackTimer(handle);
   }
 
-  void unregister(final TimerDisposable? handle) {
+  void unregister(TimerDisposable? handle) {
     _disposables.untrackTimer(handle);
   }
 

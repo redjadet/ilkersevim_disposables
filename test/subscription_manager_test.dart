@@ -58,23 +58,23 @@ class _CountingSubscription<T> implements StreamSubscription<T> {
   }
 
   @override
-  Future<E> asFuture<E>([final E? futureValue]) =>
+  Future<E> asFuture<E>([E? futureValue]) =>
       Future<E>.value(futureValue as E);
 
   @override
   bool get isPaused => _isPaused;
 
   @override
-  void onData(final void Function(T data)? handleData) {}
+  void onData(void Function(T data)? handleData) {}
 
   @override
-  void onDone(final void Function()? handleDone) {}
+  void onDone(void Function()? handleDone) {}
 
   @override
-  void onError(final Function? handleError) {}
+  void onError(Function? handleError) {}
 
   @override
-  void pause([final Future<void>? resumeSignal]) {
+  void pause([Future<void>? resumeSignal]) {
     _isPaused = true;
     resumeSignal?.whenComplete(resume);
   }

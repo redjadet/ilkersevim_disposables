@@ -15,12 +15,12 @@ class DisposableBag {
 
   bool get isDisposed => _isDisposed;
 
-  void _reportDisposeError(final Object error, final StackTrace stackTrace) {
+  void _reportDisposeError(Object error, StackTrace stackTrace) {
     Zone.current.handleUncaughtError(error, stackTrace);
   }
 
   /// Registers a synchronous dispose callback.
-  Object addSync(final void Function() dispose) {
+  Object addSync(void Function() dispose) {
     final Object token = Object();
     if (_isDisposed) {
       try {
@@ -35,11 +35,11 @@ class DisposableBag {
   }
 
   /// Registers an asynchronous dispose callback.
-  Object addAsync(final Future<void> Function() dispose) {
+  Object addAsync(Future<void> Function() dispose) {
     final Object token = Object();
     if (_isDisposed) {
       unawaited(
-        dispose().catchError((final Object error, final StackTrace stackTrace) {
+        dispose().catchError((Object error, StackTrace stackTrace) {
           _reportDisposeError(error, stackTrace);
         }),
       );
@@ -51,7 +51,7 @@ class DisposableBag {
 
   /// Registers a stream subscription for cancellation during [dispose].
   T trackSubscription<T extends StreamSubscription<dynamic>?>(
-    final T subscription,
+    T subscription,
   ) {
     final StreamSubscription<dynamic>? sub = subscription;
     if (sub == null) return subscription;
@@ -67,18 +67,18 @@ class DisposableBag {
   }
 
   /// Removes a previously tracked resource without disposing it.
-  void untrack(final Object? token) {
+  void untrack(Object? token) {
     if (token == null) return;
     _disposeActions.remove(token);
   }
 
   /// Removes a previously tracked subscription without cancelling it.
-  void untrackSubscription(final StreamSubscription<dynamic>? subscription) {
+  void untrackSubscription(StreamSubscription<dynamic>? subscription) {
     untrack(subscription);
   }
 
   /// Registers a stream controller for closure during [dispose].
-  T trackController<T extends StreamController<dynamic>>(final T controller) {
+  T trackController<T extends StreamController<dynamic>>(T controller) {
     _disposeActions[controller] = () async {
       if (controller.isClosed) return;
       try {
@@ -91,12 +91,12 @@ class DisposableBag {
   }
 
   /// Removes a previously tracked controller without closing it.
-  void untrackController(final StreamController<dynamic>? controller) {
+  void untrackController(StreamController<dynamic>? controller) {
     untrack(controller);
   }
 
   /// Registers a [TimerDisposable] for cancellation during [dispose].
-  T trackTimer<T extends TimerDisposable?>(final T disposable) {
+  T trackTimer<T extends TimerDisposable?>(T disposable) {
     final TimerDisposable? handle = disposable;
     if (handle == null) return disposable;
     _disposeActions[handle] = () async => handle.dispose();
@@ -104,7 +104,7 @@ class DisposableBag {
   }
 
   /// Removes a previously tracked timer handle without disposing it.
-  void untrackTimer(final TimerDisposable? disposable) {
+  void untrackTimer(TimerDisposable? disposable) {
     untrack(disposable);
   }
 

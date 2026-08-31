@@ -10,7 +10,7 @@ void main() async {
 
   final SubscriptionManager subs = SubscriptionManager();
   subs.register(
-    controller.stream.listen((final int value) {
+    controller.stream.listen((int value) {
       print('got $value');
     }),
   );

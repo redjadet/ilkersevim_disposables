@@ -20,10 +20,10 @@ License: [Apache-2.0](LICENSE). Issues:
 
 ```yaml
 dependencies:
-  ilkersevim_disposables: ^0.1.2
+  ilkersevim_disposables: ^0.1.3
 ```
 
-Requires Dart `>=3.12.0`.
+Requires Dart `>=3.13.0`.
 
 ## Usage
 

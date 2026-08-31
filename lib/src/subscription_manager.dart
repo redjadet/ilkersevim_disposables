@@ -37,7 +37,7 @@ class SubscriptionManager {
 
   /// Registers a subscription to be cancelled when [dispose] is called.
   /// If already [isDisposed], [subscription] is cancelled immediately.
-  T register<T extends StreamSubscription<dynamic>?>(final T subscription) {
+  T register<T extends StreamSubscription<dynamic>?>(T subscription) {
     if (_disposables.isDisposed) {
       unawaited(subscription?.cancel());
       return subscription;
@@ -50,13 +50,13 @@ class SubscriptionManager {
   ///
   /// This keeps the manager's internal set bounded for owners that frequently
   /// recreate subscriptions during runtime (e.g. restartable stream watches).
-  void unregister(final StreamSubscription<dynamic>? subscription) {
+  void unregister(StreamSubscription<dynamic>? subscription) {
     _disposables.untrackSubscription(subscription);
   }
 
   /// Cancels a registered subscription and removes it from the tracked set.
   Future<void> cancelRegistered(
-    final StreamSubscription<dynamic>? subscription,
+    StreamSubscription<dynamic>? subscription,
   ) async {
     if (subscription == null) {
       return;
