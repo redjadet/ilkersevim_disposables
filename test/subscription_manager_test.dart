@@ -58,8 +58,7 @@ class _CountingSubscription<T> implements StreamSubscription<T> {
   }
 
   @override
-  Future<E> asFuture<E>([E? futureValue]) =>
-      Future<E>.value(futureValue as E);
+  Future<E> asFuture<E>([E? futureValue]) => Future<E>.value(futureValue as E);
 
   @override
   bool get isPaused => _isPaused;

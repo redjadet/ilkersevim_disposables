@@ -50,9 +50,7 @@ class DisposableBag {
   }
 
   /// Registers a stream subscription for cancellation during [dispose].
-  T trackSubscription<T extends StreamSubscription<dynamic>?>(
-    T subscription,
-  ) {
+  T trackSubscription<T extends StreamSubscription<dynamic>?>(T subscription) {
     final StreamSubscription<dynamic>? sub = subscription;
     if (sub == null) return subscription;
 

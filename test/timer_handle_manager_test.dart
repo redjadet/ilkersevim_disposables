@@ -21,20 +21,17 @@ void main() {
       },
     );
 
-    test(
-      'unregister prevents a manually disposed handle from being disposed again',
-      () async {
-        final TimerHandleManager manager = TimerHandleManager();
-        final _CountingTimerDisposable handle = _CountingTimerDisposable();
+    test('unregister prevents a manually disposed handle from being disposed again', () async {
+      final TimerHandleManager manager = TimerHandleManager();
+      final _CountingTimerDisposable handle = _CountingTimerDisposable();
 
-        manager.register(handle);
-        handle.dispose();
-        manager.unregister(handle);
-        await manager.dispose();
+      manager.register(handle);
+      handle.dispose();
+      manager.unregister(handle);
+      await manager.dispose();
 
-        expect(handle.disposeCount, 1);
-      },
-    );
+      expect(handle.disposeCount, 1);
+    });
 
     test('register after dispose disposes immediately', () async {
       final TimerHandleManager manager = TimerHandleManager();
