@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.4
+
+- Fix `DisposableBag.trackSubscription`, `trackController`, and `trackTimer`
+  leaking resources when called after the bag has been disposed (they now
+  clean up immediately, matching `addSync` / `addAsync` and the managers).
+
 ## 0.1.3
 
 - Raise minimum SDK to Dart `>=3.13.0`.
