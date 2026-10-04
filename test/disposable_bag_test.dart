@@ -58,7 +58,48 @@ void main() {
         expect(cancelOrder, <String>['second', 'first']);
       },
     );
+
+    test('trackSubscription after dispose cancels immediately', () async {
+      final DisposableBag bag = DisposableBag();
+      final _CountingSubscription<int> subscription =
+          _CountingSubscription<int>();
+
+      await bag.dispose();
+      bag.trackSubscription(subscription);
+
+      expect(subscription.cancelCount, 1);
+    });
+
+    test('trackController after dispose closes immediately', () async {
+      final DisposableBag bag = DisposableBag();
+      final StreamController<int> controller = StreamController<int>();
+
+      await bag.dispose();
+      bag.trackController(controller);
+      await pumpEventQueue();
+
+      expect(controller.isClosed, isTrue);
+    });
+
+    test('trackTimer after dispose disposes immediately', () async {
+      final DisposableBag bag = DisposableBag();
+      final _CountingTimerDisposable handle = _CountingTimerDisposable();
+
+      await bag.dispose();
+      bag.trackTimer(handle);
+
+      expect(handle.disposeCount, 1);
+    });
   });
+}
+
+class _CountingTimerDisposable implements TimerDisposable {
+  int disposeCount = 0;
+
+  @override
+  void dispose() {
+    disposeCount++;
+  }
 }
 
 class _CountingSubscription<T> implements StreamSubscription<T> {

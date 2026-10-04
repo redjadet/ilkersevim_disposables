@@ -54,6 +54,15 @@ class DisposableBag {
     final StreamSubscription<dynamic>? sub = subscription;
     if (sub == null) return subscription;
 
+    if (_isDisposed) {
+      unawaited(
+        sub.cancel().catchError((Object error, StackTrace stackTrace) {
+          _reportDisposeError(error, stackTrace);
+        }),
+      );
+      return subscription;
+    }
+
     _disposeActions[sub] = () async {
       try {
         await sub.cancel();
@@ -77,6 +86,17 @@ class DisposableBag {
 
   /// Registers a stream controller for closure during [dispose].
   T trackController<T extends StreamController<dynamic>>(T controller) {
+    if (_isDisposed) {
+      if (!controller.isClosed) {
+        unawaited(
+          controller.close().catchError((Object error, StackTrace stackTrace) {
+            _reportDisposeError(error, stackTrace);
+          }),
+        );
+      }
+      return controller;
+    }
+
     _disposeActions[controller] = () async {
       if (controller.isClosed) return;
       try {
@@ -97,6 +117,16 @@ class DisposableBag {
   T trackTimer<T extends TimerDisposable?>(T disposable) {
     final TimerDisposable? handle = disposable;
     if (handle == null) return disposable;
+
+    if (_isDisposed) {
+      try {
+        handle.dispose();
+      } on Object catch (error, stackTrace) {
+        _reportDisposeError(error, stackTrace);
+      }
+      return disposable;
+    }
+
     _disposeActions[handle] = () async => handle.dispose();
     return disposable;
   }
